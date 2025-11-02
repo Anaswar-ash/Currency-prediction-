@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 
 from ..services.data_service import get_historical_data
-from ..services.prediction_service import train_arima_model, predict_with_arima
+from ..services.prediction_service import train_and_predict_with_lstm
 
 prediction_bp = Blueprint('prediction_bp', __name__)
 
@@ -18,11 +18,8 @@ def predict():
         # Fetch historical data
         hist = get_historical_data(ticker)
 
-        # Train the model
-        model = train_arima_model(hist)
-
-        # Make predictions
-        forecast = predict_with_arima(model)
+        # Train the model and make predictions
+        forecast = train_and_predict_with_lstm(hist)
 
         return jsonify({'prediction': forecast.tolist()})
 

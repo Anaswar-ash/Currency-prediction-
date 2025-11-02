@@ -1,27 +1,44 @@
-from statsmodels.tsa.arima.model import ARIMA
+import numpy as np
+from sklearn.preprocessing import MinMaxScaler
+from tensorflow.keras.layers import LSTM, Dense
+from tensorflow.keras.models import Sequential
 
-def train_arima_model(data):
-    """Trains an ARIMA model on the given data.
+def create_lstm_model(input_shape):
+    """Creates a simple LSTM model."""
+    model = Sequential([
+        LSTM(50, return_sequences=True, input_shape=input_shape),
+        LSTM(50),
+        Dense(25),
+        Dense(1)
+    ])
+    model.compile(optimizer='adam', loss='mean_squared_error')
+    return model
 
-    Args:
-        data (pandas.DataFrame): A DataFrame containing the historical data.
+def train_and_predict_with_lstm(data, steps=30):
+    """Trains an LSTM model and makes predictions."""
+    scaler = MinMaxScaler(feature_range=(0, 1))
+    scaled_data = scaler.fit_transform(data['Close'].values.reshape(-1, 1))
 
-    Returns:
-        statsmodels.tsa.arima.model.ARIMAResultsWrapper: The trained ARIMA model.
-    """
-    model = ARIMA(data['Close'], order=(5,1,0))
-    model_fit = model.fit()
-    return model_fit
+    prediction_days = 60
+    x_train, y_train = [], []
+    for i in range(prediction_days, len(scaled_data)):
+        x_train.append(scaled_data[i-prediction_days:i, 0])
+        y_train.append(scaled_data[i, 0])
 
-def predict_with_arima(model, steps=30):
-    """Makes predictions with a trained ARIMA model.
+    x_train, y_train = np.array(x_train), np.array(y_train)
+    x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
 
-    Args:
-        model (statsmodels.tsa.arima.model.ARIMAResultsWrapper): The trained ARIMA model.
-        steps (int, optional): The number of steps to predict. Defaults to 30.
+    model = create_lstm_model(input_shape=(x_train.shape[1], 1))
+    model.fit(x_train, y_train, epochs=1, batch_size=1, verbose=0)
 
-    Returns:
-        pandas.Series: A Series containing the predicted values.
-    """
-    forecast = model.forecast(steps=steps)
-    return forecast
+    test_inputs = scaled_data[-prediction_days:].reshape(1, -1, 1)
+    forecast = []
+    current_input = test_inputs
+
+    for _ in range(steps):
+        predicted_price = model.predict(current_input)
+        forecast.append(predicted_price[0, 0])
+        current_input = np.append(current_input[:, 1:, :], [[predicted_price]], axis=1)
+
+    forecast = scaler.inverse_transform(np.array(forecast).reshape(-1, 1))
+    return forecast.flatten()

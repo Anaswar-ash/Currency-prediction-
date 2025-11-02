@@ -1,4 +1,5 @@
 flask
 yfinance
-statsmodels
 pandas
+tensorflow
+scikit-learn
