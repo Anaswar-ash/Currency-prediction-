@@ -3,3 +3,5 @@ yfinance
 pandas
 tensorflow
 scikit-learn
+pytest
+pytest-mock
