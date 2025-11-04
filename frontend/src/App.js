@@ -8,9 +8,14 @@ function App() {
     const [ticker, setTicker] = useState('');
     const [prediction, setPrediction] = useState(null);
     const [historicalData, setHistoricalData] = useState([]);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const handlePredict = async (ticker) => {
         setTicker(ticker);
+        setLoading(true);
+        setError(null);
+        setPrediction(null);
 
         try {
             const response = await fetch('/predict', {
@@ -21,6 +26,11 @@ function App() {
                 body: JSON.stringify({ ticker }),
             });
 
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Something went wrong');
+            }
+
             const data = await response.json();
             setPrediction(data.prediction);
 
@@ -29,7 +39,10 @@ function App() {
             setHistoricalData(data.prediction);
 
         } catch (error) {
+            setError(error.message);
             console.error('Error fetching prediction:', error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -37,7 +50,9 @@ function App() {
         <div className="App">
             <h1>Currency Prediction</h1>
             <PredictionForm onPredict={handlePredict} />
-            {prediction && (
+            {loading && <p>Loading...</p>}
+            {error && <p className="error">Error: {error}</p>}
+            {prediction && !error && (
                 <>
                     <PredictionChart historicalData={historicalData} prediction={prediction} />
                     <PredictionResult prediction={prediction} />
