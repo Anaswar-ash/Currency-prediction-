@@ -1,13 +1,16 @@
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
+// This component renders the chart for displaying historical and predicted data.
 const PredictionChart = ({ historicalData, prediction }) => {
+    // Combine the historical and prediction data into a single array for the chart.
     const data = historicalData.map((item, index) => ({
-        name: index,
-        historical: item,
-        prediction: prediction && prediction[index] ? prediction[index] : null,
+        name: index, // Use the index as the x-axis label.
+        historical: item, // The historical data point.
+        prediction: prediction && prediction[index] ? prediction[index] : null, // The predicted data point.
     }));
 
+    // Render the line chart using the recharts library.
     return (
         <LineChart
             width={800}
@@ -25,7 +28,9 @@ const PredictionChart = ({ historicalData, prediction }) => {
             <YAxis />
             <Tooltip />
             <Legend />
+            {/* Line for the historical data. */}
             <Line type="monotone" dataKey="historical" stroke="#8884d8" activeDot={{ r: 8 }} />
+            {/* Line for the predicted data, only rendered if prediction data is available. */}
             {prediction && Array.isArray(prediction) && <Line type="monotone" dataKey="prediction" stroke="#82ca9d" />}
         </LineChart>
     );
