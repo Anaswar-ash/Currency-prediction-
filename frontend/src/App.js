@@ -11,7 +11,7 @@ function App() {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    const handlePredict = async (ticker) => {
+    const handlePredict = async (ticker, model) => {
         setTicker(ticker);
         setLoading(true);
         setError(null);
@@ -23,7 +23,7 @@ function App() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ ticker }),
+                body: JSON.stringify({ ticker, model }),
             });
 
             if (!response.ok) {

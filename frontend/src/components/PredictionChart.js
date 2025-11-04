@@ -26,7 +26,7 @@ const PredictionChart = ({ historicalData, prediction }) => {
             <Tooltip />
             <Legend />
             <Line type="monotone" dataKey="historical" stroke="#8884d8" activeDot={{ r: 8 }} />
-            <Line type="monotone" dataKey="prediction" stroke="#82ca9d" />
+            {prediction && Array.isArray(prediction) && <Line type="monotone" dataKey="prediction" stroke="#82ca9d" />}
         </LineChart>
     );
 };

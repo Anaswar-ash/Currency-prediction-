@@ -16,6 +16,15 @@ This web application predicts the exchange rates for the following currency pair
 *   Visualizes historical exchange rate data.
 *   [Add more features as needed]
 
+## Supported Currency Pairs
+
+*   GBP/INR
+*   EUR/USD
+*   USD/HKD
+*   USD/JPY
+*   AUD/USD
+*   GBP/USD
+
 ## Technologies Used
 
 *   **Frontend:** React
