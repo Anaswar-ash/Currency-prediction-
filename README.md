@@ -1,20 +1,17 @@
 # Currency Prediction Web Application
 
-This web application predicts the exchange rates for the following currency pairs:
-
-*   GBP/INR
-*   EUR/USD
-*   USD/HKD
+This web application predicts the exchange rates for various currency pairs using different machine learning models.
 
 ## Description
 
-[Provide a more detailed description of your project here. What does it do? What problem does it solve?]
+This project is a web application that allows users to select a currency pair and a machine learning model to predict future exchange rates. The application displays the historical data and the prediction in an interactive chart.
 
 ## Features
 
-*   Predicts future exchange rates for GBP, INR, EUR, USD, and HKD.
-*   Visualizes historical exchange rate data.
-*   [Add more features as needed]
+*   Predicts future exchange rates for various currency pairs.
+*   Supports multiple machine learning models (LSTM and Linear Regression).
+*   Visualizes historical and predicted exchange rate data in an interactive chart.
+*   Modern and responsive user interface built with React and Bootstrap.
 
 ## Supported Currency Pairs
 
@@ -27,10 +24,8 @@ This web application predicts the exchange rates for the following currency pair
 
 ## Technologies Used
 
-*   **Frontend:** React
-*   **Backend:** Python
-*   **Database:** [e.g., PostgreSQL, MongoDB, SQLite]
-*   **Machine Learning:** [e.g., TensorFlow, Keras, Scikit-learn]
+*   **Frontend:** React, Bootstrap, Recharts
+*   **Backend:** Python, Flask, TensorFlow, Keras, Scikit-learn
 
 ## Getting Started
 
@@ -122,7 +117,9 @@ This web application predicts the exchange rates for the following currency pair
 
 ## Usage
 
-[Explain how to use your application. Provide examples if possible.]
+1.  Open your web browser and navigate to `http://localhost:3000`.
+2.  Select a currency pair and a prediction model from the dropdown menus.
+3.  Click the "Predict" button to see the prediction.
 
 ## Contributing
 
