@@ -1,6 +1,6 @@
 # This is the main entry point for the Flask application.
 
-from backend.currency_prediction import create_app
+from currency_prediction import create_app
 
 # Create an instance of the Flask application
 app = create_app()
