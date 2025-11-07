@@ -29,11 +29,16 @@ This project is a web application that allows users to select a currency pair an
 
 ## Getting Started
 
-### Prerequisites
+### Prerequisites (Termux)
 
 *   **Termux**: A terminal emulator for Android.
 *   **Node.js**: For running the frontend.
 *   **proot-distro**: For running a Linux distribution within Termux.
+
+### Prerequisites (Windows)
+
+*   **Python**: For running the backend.
+*   **Node.js**: For running the frontend.
 
 ### Installation
 
@@ -43,7 +48,7 @@ This project is a web application that allows users to select a currency pair an
     cd Currency-prediction-
     ```
 
-2.  **Backend Setup (with proot-distro):**
+2.  **Backend Setup (Termux with proot-distro):**
 
     The backend requires `tensorflow`, which cannot be installed directly on Termux. We will use `proot-distro` to create an Ubuntu environment.
 
@@ -76,7 +81,25 @@ This project is a web application that allows users to select a currency pair an
         ```
         *(Note: You will need to replace `/path/to/Currency-prediction-` with the actual path to the repository within your Termux environment)*
 
-3.  **Frontend Setup:**
+3.  **Backend Setup (Windows):**
+
+    a. **Create a virtual environment:**
+        ```bash
+        cd backend
+        python -m venv venv
+        ```
+
+    b. **Activate the virtual environment:**
+        ```bash
+        .\venv\Scripts\activate
+        ```
+
+    c. **Install backend dependencies:**
+        ```bash
+        pip install -r requirements.txt
+        ```
+
+4.  **Frontend Setup:**
 
     a. **Navigate to the frontend directory:**
         ```bash
@@ -90,7 +113,7 @@ This project is a web application that allows users to select a currency pair an
 
 ### Running the Application
 
-1.  **Start the Backend:**
+1.  **Start the Backend (Termux):**
 
     a. **Log into the Ubuntu environment:**
         ```bash
@@ -103,7 +126,20 @@ This project is a web application that allows users to select a currency pair an
         flask run
         ```
 
-2.  **Start the Frontend:**
+2.  **Start the Backend (Windows):**
+
+    a. **Navigate to the backend directory and activate the virtual environment:**
+        ```bash
+        cd backend
+        .\venv\Scripts\activate
+        ```
+
+    b. **Run the Flask app:**
+        ```bash
+        flask run
+        ```
+
+3.  **Start the Frontend:**
 
     a. **Navigate to the frontend directory:**
         ```bash
